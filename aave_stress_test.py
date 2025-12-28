@@ -1,30 +1,41 @@
+"""
+Aave V3 Stress Test: Simulating Oracle Failure during Dec 24 Flash Crash
+This script quantifies the theoretical risk if the protocol had adopted the Binance BTC/USD1 wick price.
+"""
+
 import pandas as pd
 
-# Data directly from the Dec 24 Binance Flash Crash observation
-normal_price = 86608.68  # MA(7) price before the crash
-crash_price = 24111.22   # The extreme wick price
-price_drop_pct = (crash_price - normal_price) / normal_price
+# 1. Input parameters directly from the Dec 24 Flash Crash
+NORMAL_MARKET_PRICE = 86608.68  # MA(7) price at 17:19
+FLASH_CRASH_PRICE = 24111.22   # The extreme wick low
+PRICE_DROP_PCT = (FLASH_CRASH_PRICE - NORMAL_MARKET_PRICE) / NORMAL_MARKET_PRICE
 
-print(f"--- 12/24 Flash Crash Parameters ---")
-print(f"Observed Price Drop: {price_drop_pct:.2%}")
+print(f"--- Dec 24 Market Shock Summary ---")
+print(f"Localized Price Drop: {PRICE_DROP_PCT:.2%}\n") # Results in -72.15%
 
-# Stress Test: Impact on a standard Aave loan
-def simulate_position_liquidation(collateral_usd, debt_usd, threshold=0.85):
-    # Calculate current Health Factor
-    current_hf = (collateral_usd * threshold) / debt_usd
+# 2. Stress Test Simulation Logic
+def run_stress_test(collateral_usd, debt_usd, liquidation_threshold=0.85):
+    """
+    Simulates the impact on a loan's Health Factor (HF).
+    """
+    # Standard HF calculation
+    current_hf = (collateral_usd * liquidation_threshold) / debt_usd
     
-    # Calculate Health Factor if Oracle adopted the crash price
-    crash_collateral_value = collateral_usd * (1 + price_drop_pct)
-    crash_hf = (crash_collateral_value * threshold) / debt_usd
+    # HF if the Oracle failed and used the flash crash price
+    crash_collateral_value = collateral_usd * (1 + PRICE_DROP_PCT)
+    crash_hf = (crash_collateral_value * liquidation_threshold) / debt_usd
     
-    print(f"\nSimulation for a ${collateral_usd/1e6}M Position:")
+    print(f"Position Scenario: ${collateral_usd/1e6}M Collateral / ${debt_usd/1e6}M Debt")
     print(f"- Normal Health Factor: {current_hf:.2f}")
     print(f"- Crash Health Factor: {crash_hf:.2f}")
     
     if crash_hf < 1.0:
-        print("Result: POSITION LIQUIDATED. Potential Bad Debt if liquidity is thin.")
+        print(">>> STATUS: LIQUIDATION TRIGGERED. Potential for Bad Debt.")
     else:
-        print("Result: POSITION SAFE.")
+        print(">>> STATUS: POSITION SAFE.")
 
-# Run simulation for a typical whale position
-simulate_position_liquidation(collateral_usd=100000000, debt_usd=75000000)
+# 3. Running simulations for different Risk Profiles
+print("--- Stress Test Results ---")
+run_stress_test(collateral_usd=1000000, debt_usd=800000) # Aggressive borrower
+print("-" * 30)
+run_stress_test(collateral_usd=1000000, debt_usd=500000) # Conservative borrower
