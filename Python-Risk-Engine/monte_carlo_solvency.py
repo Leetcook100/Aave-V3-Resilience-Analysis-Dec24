@@ -33,11 +33,11 @@ class SolvencySimulator:
 
 
 if __name__ == "__main__":
-# 1. Initialize the simulator
-simulator = SolvencySimulator()
-
-# 2. Run simulation (This automatically triggers aave_stress_test to fetch Binance data)
-results = simulator.run_simulation()
-
-# 3. UNCOMMENT THIS LINE TO SHOW THE PLOT (本地執行必須取消這行的註釋)
-#simulator.plot_results(results)
+    # 1. Initialize the simulator
+    simulator = SolvencySimulator()
+    
+    # 2. Run simulation (This automatically triggers aave_stress_test to fetch Binance data)
+    results = simulator.run_simulation()
+    
+    # 3. UNCOMMENT THIS LINE TO SHOW THE PLOT (本地執行必須取消這行的註釋)
+    #simulator.plot_results(results)
