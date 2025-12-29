@@ -56,6 +56,22 @@ I developed a 2D sensitivity matrix mapping **Price Drop Severity** against **Ma
 | **500 BTC** | Low  | Med  | High | Critical | Critical |
 | **100 BTC** | Med  | High | Critical | Critical
 
+---
+
+### 🪙 Module 4: Tokenomics & Incentive Mechanism Stress Test
+
+Beyond price modeling, this module analyzes the **Liquidation Incentive Design** of Aave V3 to evaluate if economic incentives remain effective during catastrophic liquidity drain events.
+
+### ⚖️ Incentive vs. Friction: The Slippage Offset
+In Aave V3, the **Liquidation Penalty** (typically 5-10%) is the primary driver for liquidators to maintain protocol solvency. This study identifies the "Incentive Death Zone":
+
+* **Standard Regime**: Slippage (< 1%) << Liquidation Penalty (5-10%). Liquidators are incentivized to clear risky positions.
+* **Crash Regime (12/24 Case)**: Slippage (> 90%) >> Liquidation Penalty (10%).
+* **Economic Breakdown**: When market friction (slippage) consumes the entire liquidation bonus, rational actors stop liquidating, leading to protocol-wide **Bad Debt** regardless of the Health Factor (HF) status.
+
+### 🛠️ Strategic Recommendation
+A robust Tokenomics framework must implement **Dynamic Liquidation Bonuses** that scale based on real-time L2 order book depth. This ensures that the incentive to protect the protocol always outweighs the cost of market impact.
+
 
 
 
