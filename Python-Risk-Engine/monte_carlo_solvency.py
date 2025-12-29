@@ -40,4 +40,4 @@ simulator = SolvencySimulator()
 results = simulator.run_simulation()
 
 # 3. UNCOMMENT THIS LINE TO SHOW THE PLOT (本地執行必須取消這行的註釋)
-simulator.plot_results(results)
+#simulator.plot_results(results)
