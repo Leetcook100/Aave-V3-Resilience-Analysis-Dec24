@@ -9,7 +9,7 @@ This project evaluates the risk management efficiency of Aave V3. On 24th Dec, 2
 
 ## 📂 Project Structure & Modules
 
-### 🔍 [Module 1: Dune On-chain Forensics](https://dune.com/workspace/u/kelvinwong/library/folders/Dune%20On-chain%20Forensics)
+## 🔍 [Module 1: Dune On-chain Forensics](https://dune.com/workspace/u/kelvinwong/library/folders/Dune%20On-chain%20Forensics)
 - **Goal:** Empirical verification of protocol events during the crash window.
 - **Key Tech:** Dune SQL (V2 Engine), Event Log Auditing.
 - **Finding:** Confirmed **0 liquidations** on-chain, proving Oracle filter success.
@@ -59,7 +59,7 @@ I developed a 2D sensitivity matrix mapping **Price Drop Severity** against **Ma
 
 
 
-### 📄 [Module 3: Research Whitepaper](./Research-Reports/)
+## 📄 [Module 3: Research Whitepaper](./Research-Reports/)
 - **Goal:** Institutional-grade reporting on DeFi security parameters.
 - **Key Tech:** Quantitative Analysis, Statistical Risk Modeling (VaR).
 
