@@ -1,41 +1,37 @@
-"""
-Aave V3 Stress Test: Simulating Oracle Failure during Dec 24 Flash Crash
-This script quantifies the theoretical risk if the protocol had adopted the Binance BTC/USD1 wick price.
-"""
-
+import ccxt
 import pandas as pd
+from datetime import datetime
 
-# 1. Input parameters directly from the Dec 24 Flash Crash
-NORMAL_MARKET_PRICE = 86608.68  # MA(7) price at 17:19
-FLASH_CRASH_PRICE = 24111.22   # The extreme wick low
-PRICE_DROP_PCT = (FLASH_CRASH_PRICE - NORMAL_MARKET_PRICE) / NORMAL_MARKET_PRICE
-
-print(f"--- Dec 24 Market Shock Summary ---")
-print(f"Localized Price Drop: {PRICE_DROP_PCT:.2%}\n") # Results in -72.15%
-
-# 2. Stress Test Simulation Logic
-def run_stress_test(collateral_usd, debt_usd, liquidation_threshold=0.85):
-    """
-    Simulates the impact on a loan's Health Factor (HF).
-    """
-    # Standard HF calculation
-    current_hf = (collateral_usd * liquidation_threshold) / debt_usd
+# --- PART 1: Data Acquisition & Anomaly Detection ---
+def get_crash_params():
+    exchange = ccxt.binance()
+    # 12/24 Start Time in UTC
+    since = int(datetime(2025, 12, 24, 0, 0).timestamp() * 1000)
     
-    # HF if the Oracle failed and used the flash crash price
-    crash_collateral_value = collateral_usd * (1 + PRICE_DROP_PCT)
-    crash_hf = (crash_collateral_value * liquidation_threshold) / debt_usd
+    print("Scanning Binance for flash crash anomalies...")
+    ohlcv = exchange.fetch_ohlcv('BTC/USD1', timeframe='1m', since=since, limit=1440)
+    df = pd.DataFrame(ohlcv, columns=['ts', 'open', 'high', 'low', 'close', 'vol'])
     
-    print(f"Position Scenario: ${collateral_usd/1e6}M Collateral / ${debt_usd/1e6}M Debt")
-    print(f"- Normal Health Factor: {current_hf:.2f}")
-    print(f"- Crash Health Factor: {crash_hf:.2f}")
+    # Identify the exact second of the -72% drop
+    crash_row = df.loc[(df['low'] - df['open']) / df['open'] < -0.5].iloc[0]
+    
+    return crash_row['open'], crash_row['low']
+
+# --- PART 2: Stress Test Logic (Your Original Code) ---
+def run_stress_test(market_p, crash_p, collateral_usd=1000000, debt_usd=800000):
+    drop_pct = (crash_p - market_p) / market_p
+    liquidation_threshold = 0.85
+    
+    # Calculate HF if Oracle adopted crash price
+    crash_hf = (collateral_usd * (1 + drop_pct) * liquidation_threshold) / debt_usd
+    
+    print(f"\n--- Stress Test for ${collateral_usd/1e6}M Position ---")
+    print(f"Detected Drop: {drop_pct:.2%} (from ${market_p:,.2} to ${crash_p:,.2})")
+    print(f"Resulting Health Factor: {crash_hf:.2f}")
     
     if crash_hf < 1.0:
-        print(">>> STATUS: LIQUIDATION TRIGGERED. Potential for Bad Debt.")
-    else:
-        print(">>> STATUS: POSITION SAFE.")
+        print(">>> STATUS: LIQUIDATION TRIGGERED.")
 
-# 3. Running simulations for different Risk Profiles
-print("--- Stress Test Results ---")
-run_stress_test(collateral_usd=1000000, debt_usd=800000) # Aggressive borrower
-print("-" * 30)
-run_stress_test(collateral_usd=1000000, debt_usd=500000) # Conservative borrower
+# --- PART 3: Execution ---
+m_price, c_price = get_crash_params()
+run_stress_test(m_price, c_price)
