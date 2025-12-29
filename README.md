@@ -9,7 +9,7 @@ This project evaluates the risk management efficiency of Aave V3. On 24th Dec, 2
 
 ## 📂 Project Structure & Modules
 
-## 🔍 [Module 1: Dune On-chain Forensics](https://dune.com/workspace/u/kelvinwong/library/folders/Dune%20On-chain%20Forensics)
+# 🔍 [Module 1: Dune On-chain Forensics](https://dune.com/workspace/u/kelvinwong/library/folders/Dune%20On-chain%20Forensics)
 - **Goal:** Empirical verification of protocol events during the crash window.
 - **Key Tech:** Dune SQL (V2 Engine), Event Log Auditing.
 - **Finding:** Confirmed **0 liquidations** on-chain, proving Oracle filter success.
@@ -18,7 +18,7 @@ This project evaluates the risk management efficiency of Aave V3. On 24th Dec, 2
 
 
 
-## 🛡️ Module 2: Python Risk Engine (Stress Testing & Quantitative Analysis)
+# 🛡️ Module 2: Python Risk Engine (Stress Testing & Quantitative Analysis)
 
 This module provides a robust quantitative framework to simulate Aave V3's solvency and market resilience under extreme volatility regimes, such as the Dec 24 flash crash event.
 
@@ -75,7 +75,7 @@ A robust Tokenomics framework must implement **Dynamic Liquidation Bonuses** tha
 
 
 
-## 📄 [Module 3: Research Whitepaper](./Research-Reports/)
+# 📄 [Module 3: Research Whitepaper](./Research-Reports/)
 - **Goal:** Institutional-grade reporting on DeFi security parameters.
 - **Key Tech:** Quantitative Analysis, Statistical Risk Modeling (VaR).
 
