@@ -13,6 +13,7 @@ This project evaluates the risk management efficiency of Aave V3. On 24th Dec, 2
 - **Goal:** Empirical verification of protocol events during the crash window.
 - **Key Tech:** Dune SQL (V2 Engine), Event Log Auditing.
 - **Finding:** Confirmed **0 liquidations** on-chain, proving Oracle filter success.
+* **Deep Dive**: [Critical Analysis: Oracle Resilience & Price Manipulation Defense](./Dune-On-chain-Forensics/Oracle_Resilience_Deep_Dive.md) 🔍
 
 ### 🐍 [Module 2: Python Risk Engine](https://github.com/Leetcook100/Aave-V3-Resilience-Analysis-Dec24)
 - **Goal:** Quantitative stress testing and counterfactual simulation.
