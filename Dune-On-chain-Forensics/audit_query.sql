@@ -21,6 +21,6 @@ SELECT
     
     evt_tx_hash                                -- Transaction Hash for Etherscan verification
 FROM aave_v3_ethereum.Pool_evt_LiquidationCall
-WHERE evt_block_time >= CAST('2025-12-24 17:15:00' AS TIMESTAMP) 
-  AND evt_block_time <= CAST('2025-12-24 17:25:00' AS TIMESTAMP) -- Focus on the 10-min window around the crash
+WHERE evt_block_time >= CAST('2025-12-24 09:10:00' AS TIMESTAMP) -- UTC 09:10 = HKT 17:10
+AND evt_block_time <= CAST('2025-12-24 09:30:00' AS TIMESTAMP)   -- UTC 09:30 = HKT 17:30 -- Focus on the 10-min window around the crash
 ORDER BY evt_block_time ASC;
