@@ -9,12 +9,12 @@ This project evaluates the risk management efficiency of Aave V3. On Dec 24, 202
 
 ## 📂 Project Structure & Modules
 
-### 🔍 [Module 1: Dune On-chain Forensics](./Dune-On-chain-Forensics/)
+### 🔍 [Module 1: Dune On-chain Forensics]([./Dune-On-chain-Forensics/](https://dune.com/workspace/u/kelvinwong/library/folders/Dune%20On-chain%20Forensics))
 - **Goal:** Empirical verification of protocol events during the crash window.
 - **Key Tech:** Dune SQL (V2 Engine), Event Log Auditing.
 - **Finding:** Confirmed **0 liquidations** on-chain, proving Oracle filter success.
 
-### 🐍 [Module 2: Python Risk Engine](./Python-Risk-Engine/)
+### 🐍 [Module 2: Python Risk Engine]([./Python-Risk-Engine/](https://github.com/Leetcook100/Aave-V3-Resilience-Analysis-Dec24))
 - **Goal:** Quantitative stress testing and counterfactual simulation.
 - **Key Tech:** Python (Pandas, CCXT), Anomaly Detection, Monte Carlo.
 - **Finding:** Simulated **Bad Debt** accumulation and Health Factor (HF) collapse under simulated Oracle failure.
@@ -31,4 +31,4 @@ This project evaluates the risk management efficiency of Aave V3. On Dec 24, 202
 3. **Run Stress Test:** `python Python-Risk-Engine/aave_stress_test.py`
 
 ## 🔗 External Links
-- **Interactive Dashboard:** [View on Dune Analytics](https://dune.com/queries/6429787)
+- **Interactive Dashboard:** [View on Dune Analytics](https://dune.com/kelvinwong/dune-on-chain-forensics)
