@@ -1,11 +1,11 @@
-# Aave V3 Resilience Analysis: The Dec 24 Flash Crash Case Study
+# Aave V3 Resilience Analysis: The 24th Dec Flash Crash Case Study
 
 Investigating Aave V3's systemic stability during the 12/24 BTC flash crash (-72.15%) using multi-stage data pipelines including Dune SQL, Python Risk Modeling, and Stress Testing.
 
 ---
 
 ## 🚀 Executive Summary
-This project evaluates the risk management efficiency of Aave V3. On Dec 24, 2024, a localized flash crash on Binance saw BTC/USD1 drop to **$24,111** in seconds. This study analyzes why Aave remained solvent and quantifies the "What-if" risks if Oracle protections had failed.
+This project evaluates the risk management efficiency of Aave V3. On 24th Dec, 2025, a localized flash crash on Binance saw BTC/USD1 drop to **$24,111** in seconds. This study analyzes why Aave remained solvent and quantifies the "What-if" risks if Oracle protections had failed.
 
 ## 📂 Project Structure & Modules
 
