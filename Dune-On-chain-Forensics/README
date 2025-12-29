@@ -1,1 +1,23 @@
+### 📊 On-chain Forensic Dashboard
+To verify Aave V3's resilience during the 24th Dec flash crash, a dedicated monitoring dashboard was constructed:
 
+#### Full Audit Layout
+![Dashboard Overview](Dune-On-chain-Forensics/Dune%20screencap%201%20of%20dashboard.png)
+
+*The dashboard confirms 0 liquidations and a stable Oracle price despite external market volatility.*
+
+#### Interest Rate Stability
+![Interest Rate Test](Dune-On-chain-Forensics/Dune%20screencap%202%20of%20dashboard.png)
+
+*Forensic analysis shows consistent Borrow/Deposit APY levels throughout the 24th Dec event window.*
+
+
+
+
+Visual Evidence of Protocol Resilience:
+
+Oracle Integrity: The dashboard confirms that Aave V3 effectively filtered the -72.15% Binance price deviation, maintaining a stable internal oracle price.
+
+Zero Liquidations: Real-time event auditing shows 0 liquidation calls were triggered on Ethereum mainnet during the volatility window.
+
+Liquidity Stability: Borrowing and deposit rates remained steady, proving no panic-driven capital flight occurred.
