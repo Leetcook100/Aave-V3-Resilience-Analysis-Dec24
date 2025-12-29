@@ -15,10 +15,49 @@ This project evaluates the risk management efficiency of Aave V3. On 24th Dec, 2
 - **Finding:** Confirmed **0 liquidations** on-chain, proving Oracle filter success.
 * **Deep Dive**: [Critical Analysis: Oracle Resilience & Price Manipulation Defense](./Dune-On-chain-Forensics/Oracle_Resilience_Deep_Dive.md) 🔍
 
-### 🐍 [Module 2: Python Risk Engine](https://github.com/Leetcook100/Aave-V3-Resilience-Analysis-Dec24)
-- **Goal:** Quantitative stress testing and counterfactual simulation.
-- **Key Tech:** Python (Pandas, CCXT), Anomaly Detection, Monte Carlo.
-- **Finding:** Simulated **Bad Debt** accumulation and Health Factor (HF) collapse under simulated Oracle failure.
+
+
+
+## 🛡️ Module 2: Python Risk Engine (Stress Testing & Quantitative Analysis)
+
+This module provides a robust quantitative framework to simulate Aave V3's solvency and market resilience under extreme volatility regimes, such as the Dec 24 flash crash event.
+
+### 📊 1. Monte Carlo Solvency Simulation
+By integrating real-time crash data from Binance, this engine executed **10,000 price scenarios** to evaluate theoretical insolvency risks if Oracle protections were bypassed.
+
+* **Modeled Amplitude**: -72.15% (Extracted from 12/24 Binance Flash Crash).
+* **Theoretical Insolvency Probability**: **44.25%**.
+* **Strategic Insight**: The high failure rate in simulation validates that Aave's safety is heavily dependent on its Oracle price-smoothing mechanisms rather than pure collateralization during "black swan" seconds.
+
+![Monte Carlo Distribution](Python-Risk-Engine/monte_carlo_solvency.png)
+
+---
+
+### 📉 2. Market Liquidity & Execution Risk Analysis
+Using Layer-2 (L2) Order Book data, I modeled the "Price Impact" of a forced 1,000 BTC liquidation to assess the protocol's secondary defense layer.
+
+* **Liquidity Cliff**: Analysis reveals a catastrophic liquidity vacuum beyond **80 BTC**, where slippage exceeds **90%**.
+* **Systemic Risk**: Triggers a **"High Systemic Risk"** warning, indicating that the market depth during the crash would have been insufficient to support liquidations without causing massive Bad Debt.
+
+![Liquidity Depth Curve](Python-Risk-Engine/liquidity_depth_curve.png)
+
+---
+
+### 🧮 3. Insolvency Sensitivity Matrix (Risk Analyst Perspective)
+I developed a 2D sensitivity matrix mapping **Price Drop Severity** against **Market Depth** to identify the protocol's "Tipping Point".
+
+* **Function**: Quantifies how slippage accelerates insolvency as market liquidity thins.
+* **Practical Application**: This matrix serves as a decision-support tool for adjusting **Loan-to-Value (LTV)** ratios and **Liquidation Thresholds** based on real-time exchange depth.
+* **Data Output**: [View Full Matrix Data (CSV)](./Python-Risk-Engine/sensitivity_matrix.xls).
+
+| Liquidity (BTC) \ Price Drop | -10% | -30% | -50% | -70% | -90% |
+|-----------------------------|------|------|------|------|------|
+| **1000 BTC** | Low  | Low  | Med  | High | Critical |
+| **500 BTC** | Low  | Med  | High | Critical | Critical |
+| **100 BTC** | Med  | High | Critical | Critical
+
+
+
 
 ### 📄 [Module 3: Research Whitepaper](./Research-Reports/)
 - **Goal:** Institutional-grade reporting on DeFi security parameters.
