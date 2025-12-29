@@ -42,4 +42,4 @@ class SolvencySimulator:
 if __name__ == "__main__":
     simulator = SolvencySimulator()
     results = simulator.run_simulation()
-    # simulator.plot_results(results) # Uncomment to view plot locally
+    # simulator.plot_results(results) # 本地执行
