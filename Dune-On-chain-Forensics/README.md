@@ -3,13 +3,13 @@ To verify Aave V3's resilience during the 24th Dec flash crash, a dedicated moni
 
 #### Full Audit Layout
 
-![Dashboard Overview](dashboard_full.png)
+![Dashboard Overview](dashboard/oracle_comments.png)
 
 *The dashboard confirms 0 liquidations and a stable Oracle price despite external market volatility.*
 
 #### Interest Rate Stability
 
-![Interest Rate Test](interest_rate.png)
+![Interest Rate Test](dashboard/interest_rate.png)
 
 *Forensic analysis shows consistent Borrow/Deposit APY levels throughout the 24th Dec event window.*
 
