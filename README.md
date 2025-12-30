@@ -42,7 +42,7 @@ By integrating real-time crash data from Binance, this engine executed **10,000 
 
 ---
 
-## 📉 2. Market Liquidity & Execution Risk Analysis (High Resolution)
+#### 📉 2. Market Liquidity & Execution Risk Analysis (High Resolution)
 
 Using **Layer-2 (L2) Order Book data**, I modeled the execution slippage specifically for the `BTC/USD1` pair to quantify the market impact of liquidations during the crash.
 
@@ -54,21 +54,7 @@ Using **Layer-2 (L2) Order Book data**, I modeled the execution slippage specifi
 
 ---
 
-## 🌡️ 3. Forensic Risk Matrix: Potential Bad Debt Severity
-
-To evaluate the protocol's ultimate solvency, I generated a **2D Sensitivity Matrix** that cross-references market price drops with liquidation volumes.
-
-* **Compounding Risk Model**: The matrix calculates risk scores using the formula:
-    $$Risk Score = Price Drop \times (1 + Slippage)$$
-    This illustrates how thin liquidity acts as a force multiplier for protocol losses.
-* **Systemic Insolvency**: The heatmap shows a **"Deep Red" zone (0.90 risk score)** across nearly all liquidation volumes if the price drops beyond 40%. This confirms that the `BTC/USD1` pool was effectively **"unliquidatable"** during the event.
-* **Defense Justification**: This visualization provides the quantitative basis for why Aave V3's **Oracle Filtering** was the only line of defense preventing massive **Bad Debt**. Any triggered liquidation would have sold collateral into a bottomless liquidity hole.
-
-![Forensic Risk Matrix](Python-Risk-Engine/graphs/forensic_risk_matrix.png)
-
----
-
-## 💻 Core Risk Logic: Slippage Execution Engine
+#### 💻 Core Risk Logic: Slippage Execution Engine
 
 The following Python snippet implements the **Order Book Sweeping** algorithm used in this analysis.
 
@@ -104,22 +90,25 @@ def get_slippage_for_size(self, order_book, notion_size_btc):
 
 ---
 
-#### 🧮 3. Insolvency Sensitivity Matrix (Risk Analyst Perspective)
-I developed a 2D sensitivity matrix mapping **Price Drop Severity** against **Market Depth** to identify the protocol's "Tipping Point".
+#### 🧮 3. Forensic Risk Matrix: Potential Bad Debt Severity
 
-* **Function**: Quantifies how slippage accelerates insolvency as market liquidity thins.
-* **Practical Application**: This matrix serves as a decision-support tool for adjusting **Loan-to-Value (LTV)** ratios and **Liquidation Thresholds** based on real-time exchange depth.
-* **Data Output**: [View Full Matrix Data (CSV)](Python-Risk-Engine/sensitivity_matrix.csv).
+I developed a **2D Sensitivity Matrix** mapping **Market Price Drop (%)** against **Liquidation Volume (BTC)**. This forensic tool identifies the protocol's "Tipping Point" where localized liquidity failure converts into systemic bad debt.
 
-| Liquidity (BTC) \ Price Drop | -10% | -30% | -50% | -70% | -90% |
-|-----------------------------|------|------|------|------|------|
-| **1000 BTC** | Low  | Low  | Med  | High | Critical |
-| **500 BTC** | Low  | Med  | High | Critical | Critical |
-| **100 BTC** | Med  | High | Critical | Critical
+* **Risk Scoring Logic**: The matrix quantifies risk using the compounded formula: 
+  $$Risk Score = Price Drop \times (1 + Slippage)$$
+  This highlights how thin market depth acts as a force multiplier for protocol losses.
+* **Systemic Insolvency Insight**: The heatmap reveals a **"Deep Red" zone (0.90 risk score)** starting at just a 40% price drop. Due to the "Liquidity Vacuum" on the `BTC/USD1` pair, risk scores remain extreme even for micro-liquidations, confirming the asset was effectively unliquidatable during the crash.
+* **Decision Support**: This matrix provides the quantitative justification for adjusting **Loan-to-Value (LTV)** ratios and proves why Aave V3's **Oracle Filtering** was essential to prevent a "ghost" insolvency event triggered by localized noise.
+
+![Forensic Risk Matrix](Python-Risk-Engine/graphs/forensic_risk_matrix.png)
+
+* **Data Output**: [View Full Matrix Data (CSV)](Python-Risk-Engine/sensitivity_matrix.csv)
+* **Forensic Verification**: Captured 2 anomaly trades at **$24,111.22** (only **0.02053 BTC** total volume), which instantly validated the "Liquidity Vacuum" identified in the matrix.
+
 
 ---
 
-#### 🪙 Module 4: Tokenomics & Incentive Mechanism Stress Test
+#### 🪙 4. Tokenomics & Incentive Mechanism Stress Test
 
 Beyond price modeling, this module analyzes the **Liquidation Incentive Design** of Aave V3 to evaluate if economic incentives remain effective during catastrophic liquidity drain events.
 
