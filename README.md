@@ -57,7 +57,7 @@ I developed a 2D sensitivity matrix mapping **Price Drop Severity** against **Ma
 
 * **Function**: Quantifies how slippage accelerates insolvency as market liquidity thins.
 * **Practical Application**: This matrix serves as a decision-support tool for adjusting **Loan-to-Value (LTV)** ratios and **Liquidation Thresholds** based on real-time exchange depth.
-* **Data Output**: [View Full Matrix Data (CSV)](Python-Risk-Engine/sensitivity_matrix.xls).
+* **Data Output**: [View Full Matrix Data (CSV)](Python-Risk-Engine/sensitivity_matrix.csv).
 
 | Liquidity (BTC) \ Price Drop | -10% | -30% | -50% | -70% | -90% |
 |-----------------------------|------|------|------|------|------|
