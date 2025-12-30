@@ -38,7 +38,7 @@ By integrating real-time crash data from Binance, this engine executed **10,000 
 * **Theoretical Insolvency Probability**: **44.25%**.
 * **Strategic Insight**: The high failure rate in simulation validates that Aave's safety is heavily dependent on its Oracle price-smoothing mechanisms rather than pure collateralization during "black swan" seconds.
 
-![Monte Carlo Distribution](Python-Risk-Engine/monte_carlo_solvency.png)
+![Monte Carlo Distribution](Python-Risk-Engine/graphs/monte_carlo_solvency.png)
 
 ---
 
@@ -48,7 +48,7 @@ Using Layer-2 (L2) Order Book data, I modeled the "Price Impact" of a forced 1,0
 * **Liquidity Cliff**: Analysis reveals a catastrophic liquidity vacuum beyond **80 BTC**, where slippage exceeds **90%**.
 * **Systemic Risk**: Triggers a **"High Systemic Risk"** warning, indicating that the market depth during the crash would have been insufficient to support liquidations without causing massive Bad Debt.
 
-![Liquidity Depth Curve](Python-Risk-Engine/Liquidity_Forensics_depth_curve.png)
+![Liquidity Depth Curve](Python-Risk-Engine/graphs/forensic_impact_analysis.png)
 
 ---
 
