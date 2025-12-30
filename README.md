@@ -48,7 +48,7 @@ Using Layer-2 (L2) Order Book data, I modeled the "Price Impact" of a forced 1,0
 * **Liquidity Cliff**: Analysis reveals a catastrophic liquidity vacuum beyond **80 BTC**, where slippage exceeds **90%**.
 * **Systemic Risk**: Triggers a **"High Systemic Risk"** warning, indicating that the market depth during the crash would have been insufficient to support liquidations without causing massive Bad Debt.
 
-![Liquidity Depth Curve](Python-Risk-Engine/liquidity_depth_curve.png)
+![Liquidity Depth Curve](Python-Risk-Engine/Liquidity_Forensics_depth_curve.png)
 
 ---
 
