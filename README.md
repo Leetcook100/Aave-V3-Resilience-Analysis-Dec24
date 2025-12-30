@@ -42,13 +42,65 @@ By integrating real-time crash data from Binance, this engine executed **10,000 
 
 ---
 
-#### 📉 2. Market Liquidity & Execution Risk Analysis
-Using Layer-2 (L2) Order Book data, I modeled the "Price Impact" of a forced 1,000 BTC liquidation to assess the protocol's secondary defense layer.
+## 📉 2. Market Liquidity & Execution Risk Analysis (High Resolution)
 
-* **Liquidity Cliff**: Analysis reveals a catastrophic liquidity vacuum beyond **80 BTC**, where slippage exceeds **90%**.
-* **Systemic Risk**: Triggers a **"High Systemic Risk"** warning, indicating that the market depth during the crash would have been insufficient to support liquidations without causing massive Bad Debt.
+Using **Layer-2 (L2) Order Book data**, I modeled the execution slippage specifically for the `BTC/USD1` pair to quantify the market impact of liquidations during the crash.
+
+* **Anomaly Confirmation**: Forensic trade capture confirmed 2 anomaly trades at **$24,111.22**, involving a combined volume of only **0.02053 BTC**.
+* **Liquidity Vacuum**: High-resolution analysis reveals a catastrophic liquidity vacuum beyond **8 BTC**, where slippage instantly skyrockets to **100%**.
+* **Execution Failure Threshold**: Even micro-liquidations (**<0.05 BTC**) trigger slippage exceeding the **5% Critical Risk Threshold**, rendering traditional liquidation incentives ineffective.
 
 ![Liquidity Depth Curve](Python-Risk-Engine/graphs/forensic_impact_analysis.png)
+
+---
+
+## 🌡️ 3. Forensic Risk Matrix: Potential Bad Debt Severity
+
+To evaluate the protocol's ultimate solvency, I generated a **2D Sensitivity Matrix** that cross-references market price drops with liquidation volumes.
+
+* **Compounding Risk Model**: The matrix calculates risk scores using the formula:
+    $$Risk Score = Price Drop \times (1 + Slippage)$$
+    This illustrates how thin liquidity acts as a force multiplier for protocol losses.
+* **Systemic Insolvency**: The heatmap shows a **"Deep Red" zone (0.90 risk score)** across nearly all liquidation volumes if the price drops beyond 40%. This confirms that the `BTC/USD1` pool was effectively **"unliquidatable"** during the event.
+* **Defense Justification**: This visualization provides the quantitative basis for why Aave V3's **Oracle Filtering** was the only line of defense preventing massive **Bad Debt**. Any triggered liquidation would have sold collateral into a bottomless liquidity hole.
+
+![Forensic Risk Matrix](Python-Risk-Engine/graphs/forensic_risk_matrix.png)
+
+---
+
+## 💻 Core Risk Logic: Slippage Execution Engine
+
+The following Python snippet implements the **Order Book Sweeping** algorithm used in this analysis.
+
+```python
+def get_slippage_for_size(self, order_book, notion_size_btc):
+    """
+    Calculates execution slippage based on cumulative order book depth.
+    Identifies 'Liquidity Vacuums' where small orders cause massive price shifts.
+    """
+    bids = order_book['bids']
+    accumulated_volume = 0
+    weighted_cost = 0
+    mid_market_price = bids[0][0]  # Best available bid price
+
+    for price, amount in bids:
+        if accumulated_volume + amount >= notion_size_btc:
+            remaining_fill = notion_size_btc - accumulated_volume
+            weighted_cost += remaining_fill * price
+            accumulated_volume += remaining_fill
+            break
+        else:
+            accumulated_volume += amount
+            weighted_cost += amount * price
+
+    # Detect Liquidity Vacuum (Order size exceeds available depth)
+    if accumulated_volume < notion_size_btc:
+        return 1.0  # Represents a total market collapse (100% slippage)
+
+    # Calculate Volume Weighted Average Price (VWAP)
+    execution_vwap = weighted_cost / notion_size_btc
+    return (mid_market_price - execution_vwap) / mid_market_price
+```
 
 ---
 
