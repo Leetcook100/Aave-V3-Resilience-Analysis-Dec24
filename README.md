@@ -52,7 +52,6 @@ Using **Layer-2 (L2) Order Book data**, I modeled the execution slippage specifi
 
 ![Liquidity Depth Curve](Python-Risk-Engine/graphs/forensic_impact_analysis.png)
 
----
 
 #### 💻 Core Risk Logic: Slippage Execution Engine
 
@@ -112,18 +111,20 @@ I developed a **2D Sensitivity Matrix** mapping **Market Price Drop (%)** agains
 
 Beyond price modeling, this module analyzes the **Liquidation Incentive Design** of Aave V3 to evaluate if economic incentives remain effective during catastrophic liquidity drain events.
 
-#### ⚖️ Incentive vs. Friction: The Slippage Offset
-In Aave V3, the **Liquidation Penalty** (typically 5-10%) is the primary driver for liquidators to maintain protocol solvency. This study identifies the "Incentive Death Zone":
+#### ⚖️ Incentive vs. Friction: The "Incentive Death Zone"
+In Aave V3, the **Liquidation Bonus** (typically 5-10%) is the primary driver for liquidators. This study identifies a critical failure state where market friction renders protocol incentives mathematically void:
 
-* **Standard Regime**: Slippage (< 1%) << Liquidation Penalty (5-10%). Liquidators are incentivized to clear risky positions.
-* **Crash Regime (12/24 Case)**: Slippage (> 90%) >> Liquidation Penalty (10%).
-* **Economic Breakdown**: When market friction (slippage) consumes the entire liquidation bonus, rational actors stop liquidating, leading to protocol-wide **Bad Debt** regardless of the Health Factor (HF) status.
+* **Standard Regime**: Slippage (< 1%) << Liquidation Bonus (5-10%). Liquidators remain profitable and the protocol stays solvent.
+* **Crash Regime (12/24 Case)**: Slippage (100%) >> Liquidation Bonus (10%).
+* **Economic Breakdown**: Forensic capture of the **$24,111** anomaly confirms that even a **0.02 BTC** liquidation would have cost the liquidator over 70% in slippage. In this "Incentive Death Zone," rational actors stop liquidating, leading to **Systemic Bad Debt**.
 
-#### 🛠️ Strategic Recommendation
-A robust Tokenomics framework must implement **Dynamic Liquidation Bonuses** that scale based on real-time L2 order book depth. This ensures that the incentive to protect the protocol always outweighs the cost of market impact.
+#### 🛠️ Strategic Recommendation: Liquidity-Aware Governance
+Based on the **Forensic Risk Matrix**, a robust framework must move beyond static parameters:
+1. **Dynamic Liquidation Bonuses**: Incentives should scale based on real-time **L2 Order Book Depth** to ensure the bonus always offsets the market impact.
+2. **Oracle Latency Filtering**: The 12/24 event proves that the primary defense isn't the incentive, but the **Oracle's ability to ignore "Liquidity Vacuums"** where price discovery has failed.
 
 
-
+---
 
 ## 📄 [Module 3: Research Whitepaper](./Research-Reports/)
 - **Goal:** Institutional-grade reporting on DeFi security parameters.
@@ -137,4 +138,4 @@ A robust Tokenomics framework must implement **Dynamic Liquidation Bonuses** tha
 3. **Run Stress Test:** `python Python-Risk-Engine/aave_stress_test.py`
 
 ### 🔗 External Links
-- **Interactive Dashboard:** [View on Dune Analytics](https://dune.com/kelvinwong/dune-on-chain-forensics)
+- **Interactive Dashboard:** [View on Dune Analytics](https://dune.com/kelvinwong/aave-v3-market-stress-monitor-24th-dec-case-study)
