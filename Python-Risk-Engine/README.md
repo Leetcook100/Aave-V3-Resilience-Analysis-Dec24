@@ -5,7 +5,7 @@ This module provides a quantitative framework to simulate Aave V3's resilience a
 ### 📊 Monte Carlo Simulation Result
 By integrating Binance real-time crash data, this engine simulates 10,000 price scenarios to evaluate insolvency risks.
 
-![Risk Distribution](./monte_carlo_solvency.png)
+![Risk Distribution](graphs/monte_carlo_solvency.png)
 
 **Key Metrics:**
 * **Crash Amplitude:** -72.15% (Modeled from 12/24 Binance Flash Crash)
@@ -21,7 +21,7 @@ For a detailed step-by-step technical analysis and code execution, please refer 
 ### 📉 Market Liquidity & Execution Slippage Analysis
 To evaluate the protocol's secondary defense layer, I modeled the market impact of large-scale liquidations using real-time L2 Order Book data.
 
-![Liquidity Depth Curve](liquidity_depth_curve.png)
+![Liquidity Depth Curve](graphs/forensic_impact_analysis.png)
 
 Key Findings:
 Liquidity Threshold: The BTC/USDT market depth on Binance can safely absorb up to approximately 60 BTC in single-block liquidations with minimal slippage.
