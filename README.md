@@ -7,6 +7,15 @@ Investigating Aave V3's systemic stability during the 12/24 BTC flash crash (-72
 ### 🚀 Executive Summary
 This project evaluates the risk management efficiency of Aave V3. On 24th Dec, 2025, a localized flash crash on Binance saw BTC/USD1 drop to **$24,111** in seconds. This study analyzes why Aave remained solvent and quantifies the "What-if" risks if Oracle protections had failed.
 
+---
+
+### 🎯 Motivation & Context
+As a dedicated student in **Risk Management / Actuarial Science**, this project represents my initial deep-dive into the intersection of **On-chain Forensics** and **Quantitative Finance**. 
+
+My goal was to apply theoretical risk models (like Monte Carlo and L2 Liquidity analysis) to a real-world "Black Swan" event—the Aave V3 Dec 24 flash crash—to bridge the gap between academic theory and DeFi market microstructure.
+
+---
+
 ## 📂 Project Structure & Modules
 
 ## 🔍 [Module 1: Dune On-chain Forensics](https://dune.com/workspace/u/kelvinwong/library/folders/Dune%20On-chain%20Forensics)
