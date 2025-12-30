@@ -17,12 +17,12 @@ def get_crash_params():
     
     return crash_row['open'], crash_row['low']
 
-# --- PART 2: Stress Test Logic (Your Original Code) ---
+# --- PART 2: Stress Test Logic ---
 def run_stress_test(market_p, crash_p, collateral_usd=1000000, debt_usd=800000):
     drop_pct = (crash_p - market_p) / market_p
     liquidation_threshold = 0.85
     
-    # Calculate HF if Oracle adopted crash price
+    # Calculate HF, the (Simulated) Health Factor, if Oracle adopted crash price
     crash_hf = (collateral_usd * (1 + drop_pct) * liquidation_threshold) / debt_usd
     
     print(f"\n--- Stress Test for ${collateral_usd/1e6}M Position ---")
