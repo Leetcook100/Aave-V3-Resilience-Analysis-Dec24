@@ -9,10 +9,10 @@ This project evaluates the risk management efficiency of Aave V3. On 24th Dec, 2
 
 ---
 
-### 🎯 Motivation & Context
-As a dedicated student in **Actuarial Science/ Finance**, this project represents my initial deep-dive into the intersection of **On-chain Forensics** and **Quantitative Finance**. 
+### 🎯 Research Motivation & Background
+As a student specialized in **Actuarial Science** with a **minor in Finance**, I am driven to apply rigorous quantitative frameworks to evaluate systemic risks in the decentralized finance (DeFi) ecosystem.
 
-My goal was to apply theoretical risk models (like Monte Carlo and L2 Liquidity analysis) to a real-world "Black Swan" event—the Aave V3 Dec 24 flash crash—to bridge the gap between academic theory and DeFi market microstructure.
+This project serves as my inaugural deep-dive into **Crypto-native Risk Management**. By integrating **Actuarial Ruin Theory** (Monte Carlo Solvency simulations) with **Financial Market Microstructure** (L2 Liquidity & Slippage analysis), I aim to quantify the robustness of Aave V3 during extreme volatility events like the Dec 24 flash crash.
 
 ---
 
