@@ -33,7 +33,7 @@ To verify the systemic risk impact of the Binance **BTC/USD1 flash crash (-72.15
 The investigation utilized advanced Etherscan filtering to isolate `LiquidationCall` events and decoded smart contract `input data` to identify underlying collateral assets.
 
 ### 📊 Forensic Findings
-![Etherscan evidence (Dec 22-26 range searching)](LiquidationCall Dec22-26.png)
+![Etherscan evidence (Dec 22-26 range searching)](LiquidationCall_Dec22-26.png)
 ![Etherscan evidence (transaction details)](KNC1.png)
 ![](KNC2.png)
 * **Temporal Disconnect (False Positives)** Initial data filtering for Dec 22–26 identified 8 potential liquidation events on Dec 24. However, timestamp auditing revealed that **7 out of 8 transactions** occurred at ~06:44 AM UTC, approximately **3 hours prior** to the 09:19 AM BTC flash crash on Binance. These are categorized as routine market volatility rather than event-driven failures.
