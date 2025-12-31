@@ -25,7 +25,28 @@ This project serves as my inaugural deep-dive into **Crypto-native Risk Manageme
 * **Deep Dive**: [Critical Analysis: Oracle Resilience & Price Manipulation Defense](./Dune-On-chain-Forensics/Oracle_Resilience_Deep_Dive.md) 🔍
 
 
+## 🕵️ On-chain Forensic Investigation: Dec 24 Liquidity Event
 
+To verify the systemic risk impact of the Binance **BTC/USD1 flash crash (-72.15%)**, an exhaustive on-chain audit was conducted on the Aave V3 protocol via Etherscan.
+
+### 🔍 Methodology & Evidence Chain
+The investigation utilized advanced Etherscan filtering to isolate `LiquidationCall` events and decoded smart contract `input data` to identify underlying collateral assets.
+
+### 📊 Forensic Findings
+![Etherscan evidence (Dec 22-26 range searching)](LiquidationCall Dec22-26.png)
+![Etherscan evidence (transaction details)](KNC1.png)
+![](KNC2.png)
+* **Temporal Disconnect (False Positives)** Initial data filtering for Dec 22–26 identified 8 potential liquidation events on Dec 24. However, timestamp auditing revealed that **7 out of 8 transactions** occurred at ~06:44 AM UTC, approximately **3 hours prior** to the 09:19 AM BTC flash crash on Binance. These are categorized as routine market volatility rather than event-driven failures.
+
+* **Asset & Value Mismatch** A single successful liquidation was recorded post-crash at **11:10 AM UTC**. Decoding the transaction logs and input data confirmed:
+    * **Collateral Asset**: KNC (Kyber Network).
+    * **Liquidation Size**: A negligible **1.17 USDC** debt repayment.
+    * **Correlation**: KNC price feeds showed no significant correlation to the BTC/USD1 deviation, identifying this event as statistical noise.
+
+* **Oracle Resilience Analysis** Despite the extreme -72% price drop on a major centralized exchange, Aave V3’s internal Oracle price (Chainlink-driven) remained stable between **$86.7k – $86.9k**. This proves the protocol's multi-source price aggregation effectively filtered out external exchange noise.
+
+### ⚖️ Final Audit Conclusion
+The forensic data confirms **zero correlated liquidations** occurred on the Ethereum mainnet as a result of the Binance flash crash. The Aave V3 risk engine and Oracle integrity mechanisms demonstrated **100% resilience**, successfully protecting user positions from systemic insolvency during the peak volatility window.
 ---
 
 
