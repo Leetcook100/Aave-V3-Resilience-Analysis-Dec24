@@ -123,10 +123,10 @@ def get_slippage_for_size(self, order_book, notion_size_btc):
 Our engine identifies two distinct risk regimes based on liquidation volume:
 
 * **Retail Regime (< 1.0 BTC):** Risks scale linearly with market price volatility. At this scale, execution slippage is negligible ($\approx 0\%$), meaning a **40% price drop** results in a safe **Risk Score of 0.40**.
-![Monte Carlo Distribution](Python-Risk-Engine/graphs/monte_carlo_solvency.png)
+![(< 1.0 BTC)](Python-Risk-Engine/graphs/forensic_risk_matrix_basecase.png)
 
 * **Institutional Regime (50 - 500 BTC):** The system enters a **"Liquidity Vacuum"**. Slippage saturates at **100%**, effectively doubling the risk impact. Here, a **50% market drop** triggers an **Insolvency Score of 1.0 (Bad Debt)**.
-![Monte Carlo Distribution](Python-Risk-Engine/graphs/monte_carlo_solvency.png)
+![(50 - 500 BTC)](Python-Risk-Engine/graphs/forensic_risk_matrix_largesize.png)
 
 
 ##### 3.2. The "Slippage Saturation" Paradox
