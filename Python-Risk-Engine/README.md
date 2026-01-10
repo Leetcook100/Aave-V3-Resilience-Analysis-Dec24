@@ -9,7 +9,7 @@ By integrating real-time crash data from Binance, this engine executed **10,000 
 * **Theoretical Insolvency Probability**: **44.25%**.
 * **Strategic Insight**: The high failure rate in simulation validates that Aave's safety is heavily dependent on its Oracle price-smoothing mechanisms rather than pure collateralization during "black swan" seconds.
 
-![Monte Carlo Distribution](Python-Risk-Engine/graphs/monte_carlo_solvency.png)
+![Monte Carlo Distribution](graphs/monte_carlo_solvency.png)
 
 ---
 
@@ -21,7 +21,7 @@ Using **Layer-2 (L2) Order Book data**, I modeled the execution slippage specifi
 * **Liquidity Vacuum**: High-resolution analysis reveals a catastrophic liquidity vacuum beyond **8 BTC**, where slippage instantly skyrockets to **100%**.
 * **Execution Failure Threshold**: Even micro-liquidations (**<0.05 BTC**) trigger slippage exceeding the **5% Critical Risk Threshold**, rendering traditional liquidation incentives ineffective.
 
-![Liquidity Depth Curve](Python-Risk-Engine/graphs/forensic_impact_analysis.png)
+![Liquidity Depth Curve](graphs/forensic_impact_analysis.png)
 
 
 #### 💻 Core Risk Logic: Slippage Execution Engine
@@ -71,10 +71,10 @@ def get_slippage_for_size(self, order_book, notion_size_btc):
 Our engine identifies two distinct risk regimes based on liquidation volume:
 
 * **Retail Regime (< 1.0 BTC):** Risks scale linearly with market price volatility. At this scale, execution slippage is negligible ($\approx 0\%$), meaning a **40% price drop** results in a safe **Risk Score of 0.40**.
-![(< 1.0 BTC)](Python-Risk-Engine/graphs/forensic_risk_matrix_basecase.png)
+![(< 1.0 BTC)](graphs/forensic_risk_matrix_basecase.png)
 
 * **Institutional Regime (50 - 500 BTC):** The system enters a **"Liquidity Vacuum"**. Slippage saturates at **100%**, effectively doubling the risk impact. Here, a **50% market drop** triggers an **Insolvency Score of 1.0 (Bad Debt)**.
-![(50 - 500 BTC)](Python-Risk-Engine/graphs/forensic_risk_matrix_largesize.png)
+![(50 - 500 BTC)](graphs/forensic_risk_matrix_largesize.png)
 
 
 ##### 3.2. The "Slippage Saturation" Paradox
