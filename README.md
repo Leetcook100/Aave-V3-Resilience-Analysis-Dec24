@@ -119,18 +119,22 @@ def get_slippage_for_size(self, order_book, notion_size_btc):
 
 ## 📊 Simulation Results & Risk Analysis
 
-### 3.1. Dual-Layer Risk Sensitivity
+##### 3.1. Dual-Layer Risk Sensitivity
 Our engine identifies two distinct risk regimes based on liquidation volume:
 
 * **Retail Regime (< 1.0 BTC):** Risks scale linearly with market price volatility. At this scale, execution slippage is negligible ($\approx 0\%$), meaning a **40% price drop** results in a safe **Risk Score of 0.40**.
-* **Institutional Regime (50 - 500 BTC):** The system enters a **"Liquidity Vacuum"**. Slippage saturates at **100%**, effectively doubling the risk impact. Here, a **50% market drop** triggers an **Insolvency Score of 1.0 (Bad Debt)**.
+![Monte Carlo Distribution](Python-Risk-Engine/graphs/monte_carlo_solvency.png)
 
-### 3.2. The "Slippage Saturation" Paradox
+* **Institutional Regime (50 - 500 BTC):** The system enters a **"Liquidity Vacuum"**. Slippage saturates at **100%**, effectively doubling the risk impact. Here, a **50% market drop** triggers an **Insolvency Score of 1.0 (Bad Debt)**.
+![Monte Carlo Distribution](Python-Risk-Engine/graphs/monte_carlo_solvency.png)
+
+
+##### 3.2. The "Slippage Saturation" Paradox
 The simulation highlights a non-linear risk tipping point at approximately **8 BTC**. Beyond this threshold, we observe **Vertical Risk Convergence**: 
 * Increasing liquidation size from 50 BTC to 500 BTC no longer increases the risk score because market depth is completely exhausted.
 * In this state, the protocol's health is purely sensitive to **Price Discovery**, not Volume.
 
-## 🛠 3.3. Theoretical Framework: The Incentive Death Zone
+##### 🛠 Theoretical Framework: The Incentive Death Zone
 The core of our modeling uses the following formula to evaluate protocol solvency:
 
 $$\text{Risk Score} = \text{Price Drop} \times (1 + \text{Slippage})$$
@@ -138,7 +142,7 @@ $$\text{Risk Score} = \text{Price Drop} \times (1 + \text{Slippage})$$
 * **The Breakdown**: When slippage hits 100%, the **10% Liquidation Bonus** (Aave V3 standard) becomes mathematically insufficient to cover execution costs.
 * **The Result**: This creates an **"Incentive Death Zone"** where rational liquidators will not intervene, leading to inevitable bad debt despite high over-collateralization ratios.
 
-## 🏁 3.4. Conclusion & Oracle Insights
+##### 🏁 Conclusion & Oracle Insights
 Aave V3's resilience during the crash was not due to the liquidation mechanism, which would have failed in a 50 BTC+ sell-off. Instead, safety was maintained by **Oracle Robustness**. 
 
 By analyzing **Chainlink’s price aggregation methodology** (Volume-Weighted Average Price across multiple nodes), the system successfully filtered the illiquid noise from Binance, preventing a catastrophic liquidation cascade in a vacuum.
