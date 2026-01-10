@@ -112,21 +112,36 @@ def get_slippage_for_size(self, order_book, notion_size_btc):
 
 ---
 
+
+
 #### 🧮 3. Forensic Risk Matrix: Potential Bad Debt Severity
 
-I developed a **2D Sensitivity Matrix** mapping **Market Price Drop (%)** against **Liquidation Volume (BTC)**. This forensic tool identifies the protocol's "Tipping Point" where localized liquidity failure converts into systemic bad debt.
 
-* **Risk Scoring Logic**: The matrix quantifies risk using the compounded formula: 
-  $$Risk Score = Price Drop \times (1 + Slippage)$$
-  This highlights how thin market depth acts as a force multiplier for protocol losses.
-* **Systemic Insolvency Insight**: The heatmap reveals a **"Deep Red" zone (0.90 risk score)** starting at just a 40% price drop. Due to the "Liquidity Vacuum" on the `BTC/USD1` pair, risk scores remain extreme even for micro-liquidations, confirming the asset was effectively unliquidatable during the crash.
-* **Decision Support**: This matrix provides the quantitative justification for adjusting **Loan-to-Value (LTV)** ratios and proves why Aave V3's **Oracle Filtering** was essential to prevent a "ghost" insolvency event triggered by localized noise.
+## 📊 Simulation Results & Risk Analysis
 
-![Forensic Risk Matrix](Python-Risk-Engine/graphs/forensic_risk_matrix.png)
+### 3.1. Dual-Layer Risk Sensitivity
+Our engine identifies two distinct risk regimes based on liquidation volume:
 
-* **Data Output**: [View Full Matrix Data (CSV)](Python-Risk-Engine/sensitivity_matrix.csv)
-* **Forensic Verification**: Captured 2 anomaly trades at **$24,111.22** (only **0.02053 BTC** total volume), which instantly validated the "Liquidity Vacuum" identified in the matrix.
+* **Retail Regime (< 1.0 BTC):** Risks scale linearly with market price volatility. At this scale, execution slippage is negligible ($\approx 0\%$), meaning a **40% price drop** results in a safe **Risk Score of 0.40**.
+* **Institutional Regime (50 - 500 BTC):** The system enters a **"Liquidity Vacuum"**. Slippage saturates at **100%**, effectively doubling the risk impact. Here, a **50% market drop** triggers an **Insolvency Score of 1.0 (Bad Debt)**.
 
+### 3.2. The "Slippage Saturation" Paradox
+The simulation highlights a non-linear risk tipping point at approximately **8 BTC**. Beyond this threshold, we observe **Vertical Risk Convergence**: 
+* Increasing liquidation size from 50 BTC to 500 BTC no longer increases the risk score because market depth is completely exhausted.
+* In this state, the protocol's health is purely sensitive to **Price Discovery**, not Volume.
+
+## 🛠 3.3. Theoretical Framework: The Incentive Death Zone
+The core of our modeling uses the following formula to evaluate protocol solvency:
+
+$$\text{Risk Score} = \text{Price Drop} \times (1 + \text{Slippage})$$
+
+* **The Breakdown**: When slippage hits 100%, the **10% Liquidation Bonus** (Aave V3 standard) becomes mathematically insufficient to cover execution costs.
+* **The Result**: This creates an **"Incentive Death Zone"** where rational liquidators will not intervene, leading to inevitable bad debt despite high over-collateralization ratios.
+
+## 🏁 3.4. Conclusion & Oracle Insights
+Aave V3's resilience during the crash was not due to the liquidation mechanism, which would have failed in a 50 BTC+ sell-off. Instead, safety was maintained by **Oracle Robustness**. 
+
+By analyzing **Chainlink’s price aggregation methodology** (Volume-Weighted Average Price across multiple nodes), the system successfully filtered the illiquid noise from Binance, preventing a catastrophic liquidation cascade in a vacuum.
 
 ---
 
